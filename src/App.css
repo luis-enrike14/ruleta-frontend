@@ -221,14 +221,3 @@ h2 {
   opacity: 0.7;
 }
 
-/* Ocultar cualquier badge o inserción de Netlify por la fuerza */
-#netlify-badge,
-[data-netlify-badge],
-.netlify-badge,
-div[style*="z-index"][style*="position: fixed"],
-iframe[src*="netlify"] {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}

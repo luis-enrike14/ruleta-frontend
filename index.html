@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel de Administración</title>
+    <style>
+      /* Oculta de forma absoluta el badge/drawer de Netlify */
+      netlify-badge,
+      #netlify-badge,
+      [data-netlify-badge],
+      .netlify-badge,
+      div[class*="netlify"],
+      iframe[src*="netlify"] {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
