@@ -394,7 +394,7 @@ function App() {
     toPng(reporteGanadoresRef.current, { cacheBust: true, backgroundColor: '#0f172a' })
       .then((dataUrl) => {
         const link = document.createElement('a');
-        link.download = `reporte-ganadores-${new Date().toISOString().slice(0,10)}.png`;
+        link.download = `reporte-ganadores-${new Date().toISOString().slice(0, 10)}.png`;
         link.href = dataUrl;
         link.click();
       })
@@ -569,83 +569,88 @@ function App() {
               </thead>
               <tbody>
                 {folios.map((f, index) => {
-                  const esGanador = f.premio_asignado && f.premio_asignado !== "Suerte para la próxima" && f.premio_asignado !== "Sin asignar";
-                  const numeroVisual = ((index + 1) % 100).toString().padStart(2, '0');
-                  return (
-                    <tr key={f.id} style={{ borderBottom: '1px solid #334155', backgroundColor: f.usado ? 'rgba(239, 68, 68, 0.1)' : 'transparent' }}>
-                      <td style={{ padding: '10px', color: '#94a3b8' }}>{numeroVisual}</td>
-                      <td style={{ padding: '10px' }}><strong style={{ color: '#38bdf8', fontFamily: 'monospace', fontSize: '1rem' }}>{f.codigo}</strong></td>
-                      <td style={{ padding: '10px' }}>
-                        <span style={{
-                          padding: '4px 8px', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold',
-                          backgroundColor: esGanador ? 'rgba(16, 185, 129, 0.2)' : '#334155',
-                          color: esGanador ? '#34d399' : '#e2e8f0',
-                          border: esGanador ? '1px solid #10b981' : '1px solid #475569'
-                        }}>
-                          {f.premio_asignado === 'Sin asignar' ? '⚠️ Sin asignar' : (esGanador ? `🎁 ${f.premio_asignado}` : '❌ Suerte')}
-                        </span>
-                      </td>
-                      <td style={{ padding: '10px', textAlign: 'center' }}>
-                        <span style={{ color: f.tipo_giro_extra > 0 ? '#fbbf24' : '#64748b', fontWeight: 'bold' }}>
-                          {f.tipo_giro_extra > 0 ? `+${f.tipo_giro_extra} 🎰` : '-'}
-                        </span>
-                      </td>
-                      <td style={{ padding: '10px' }}>
-                        <span style={{ fontWeight: 'bold', color: f.usado ? '#f87171' : '#34d399' }}>
-                          {f.usado ? '🔴 Utilizado' : '🟢 Disponible'}
-                        </span>
-                      </td>
-                      <td style={{ padding: '10px', color: '#cbd5e1' }}>{f.premio_ganado || '-'}</td>
-                      <td style={{ padding: '10px' }}>
-                        <button className="btn-eliminar-item" onClick={() => eliminarFolio(f.id, f.codigo)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.1rem' }} title="Eliminar folio">❌</button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {/* MÓDULO ESPECIAL PUBLICITARIO */}
-          <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
-            <div
-              ref={reporteGanadoresRef}
-              style={{
-                width: '650px',
-                padding: '30px',
-                backgroundColor: '#0f172a',
-                color: '#ffffff',
-                fontFamily: '"Segoe UI", Roboto, sans-serif',
-                borderRadius: '16px',
-                border: '2px solid #d4af37',
-                boxSizing: 'border-box'
-              }}
-            >
-              <div style={{ textAlign: 'center', marginBottom: '25px' }}>
-                <h2 style={{ color: '#ffd700', margin: '0 0 5px 0', fontSize: '1.8rem', letterSpacing: '1px' }}>
-                  🏆 REPORTE OFICIAL DE GANADORES 🏆
-                </h2>
-                <p style={{ color: '#94a3b8', margin: 0, fontSize: '0.95rem' }}>
-                  Sorteo y Ruleta de la Suerte
-                </p>
-              </div>
-
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                <thead>
-                  <tr style={{ background: '#1e293b', color: '#ffd700', borderBottom: '2px solid #d4af37' }}>
-                    <th style={{ padding: '12px', textAlign: 'center' }}>#</th>
-                    <th style={{ padding: '12px' }}>Folio</th>
-                    <th style={{ padding: '12px' }}>Premio Obtenido</th>
-                    <th style={{ padding: '12px', textAlign: 'right' }}>Fecha y Hora</th>
+                const esGanador = f.premio_asignado && f.premio_asignado !== "Suerte para la próxima" && f.premio_asignado !== "Sin asignar";
+                const numeroVisual = ((index + 1) % 100).toString().padStart(2, '0');
+                return (
+                  <tr key={f.id} style={{ borderBottom: '1px solid #334155', backgroundColor: f.usado ? 'rgba(239, 68, 68, 0.1)' : 'transparent' }}>
+                    <td style={{ padding: '10px', color: '#94a3b8' }}>{numeroVisual}</td>
+                    <td style={{ padding: '10px' }}><strong style={{ color: '#38bdf8', fontFamily: 'monospace', fontSize: '1rem' }}>{f.codigo}</strong></td>
+                    <td style={{ padding: '10px' }}>
+                      <span style={{
+                        padding: '4px 8px', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 'bold',
+                        backgroundColor: esGanador ? 'rgba(16, 185, 129, 0.2)' : '#334155',
+                        color: esGanador ? '#34d399' : '#e2e8f0',
+                        border: esGanador ? '1px solid #10b981' : '1px solid #475569'
+                      }}>
+                        {f.premio_asignado === 'Sin asignar' ? '⚠️ Sin asignar' : (esGanador ? `🎁 ${f.premio_asignado}` : '❌ Suerte')}
+                      </span>
+                    </td>
+                    <td style={{ padding: '10px', textAlign: 'center' }}>
+                      <span style={{ color: f.tipo_giro_extra > 0 ? '#fbbf24' : '#64748b', fontWeight: 'bold' }}>
+                        {f.tipo_giro_extra > 0 ? `+${f.tipo_giro_extra} 🎰` : '-'}
+                      </span>
+                    </td>
+                    <td style={{ padding: '10px' }}>
+                      <span style={{ fontWeight: 'bold', color: f.usado ? '#f87171' : '#34d399' }}>
+                        {f.usado ? '🔴 Utilizado' : '🟢 Disponible'}
+                      </span>
+                    </td>
+                    <td style={{ padding: '10px', color: '#cbd5e1' }}>{f.premio_ganado || '-'}</td>
+                    <td style={{ padding: '10px' }}>
+                      <button className="btn-eliminar-item" onClick={() => eliminarFolio(f.id, f.codigo)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.1rem' }} title="Eliminar folio">❌</button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {foliosGanadoresOficiales.length > 0 ? (
-                    foliosGanadoresOficiales.map((f, index) => (
-                      <tr key={f.id} style={{ borderBottom: '1px solid #334155', background: index % 2 === 0 ? 'rgba(30, 41, 59, 0.3)' : 'transparent' }}>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* MÓDULO ESPECIAL PUBLICITARIO */}
+        <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+          <div
+            ref={reporteGanadoresRef}
+            style={{
+              width: '650px',
+              padding: '30px',
+              backgroundColor: '#0f172a',
+              color: '#ffffff',
+              fontFamily: '"Segoe UI", Roboto, sans-serif',
+              borderRadius: '16px',
+              border: '2px solid #d4af37',
+              boxSizing: 'border-box'
+            }}
+          >
+            <div style={{ textAlign: 'center', marginBottom: '25px' }}>
+              <h2 style={{ color: '#ffd700', margin: '0 0 5px 0', fontSize: '1.8rem', letterSpacing: '1px' }}>
+                🏆 REPORTE OFICIAL DE GANADORES 🏆
+              </h2>
+              <p style={{ color: '#94a3b8', margin: 0, fontSize: '0.95rem' }}>
+                Sorteo y Ruleta de la Suerte
+              </p>
+            </div>
+
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+              <thead>
+                <tr style={{ background: '#1e293b', color: '#ffd700', borderBottom: '2px solid #d4af37' }}>
+                  <th style={{ padding: '12px', textAlign: 'center' }}>#</th>
+                  <th style={{ padding: '12px' }}>Folio</th>
+                  <th style={{ padding: '12px' }}>Premio Obtenido</th>
+                  <th style={{ padding: '12px', textAlign: 'right' }}>Fecha y Hora</th>
+                </tr>
+              </thead>
+              <tbody>
+                {foliosGanadoresOficiales.length > 0 ? (
+                  foliosGanadoresOficiales.map((f, index) => {
+                    // Buscamos dentro de la lista principal de folios para extraer exactamente el número que le correspondía
+                    const folioOriginal = folios.find(item => item.id === f.id || item.codigo === f.codigo);
+                    const indiceOriginal = folioOriginal ? folios.indexOf(folioOriginal) : index;
+                    const numeroRealGanador = ((indiceOriginal + 1) % 100).toString().padStart(2, '0');
+
+                    return (
+                      <tr key={f.id || index} style={{ borderBottom: '1px solid #334155', background: index % 2 === 0 ? 'rgba(30, 41, 59, 0.3)' : 'transparent' }}>
                         <td style={{ padding: '12px', textAlign: 'center', color: '#ffd700', fontWeight: 'bold' }}>
-                          {/* Muestra estrictamente el número del premio/casilla de la ruleta registrado en el backend */}
-                          {String(f.numero_ganador ?? f.numero ?? f.casilla ?? f.premio_numero ?? '01').padStart(2, '0')}
+                          {numeroRealGanador}
                         </td>
                         <td style={{ padding: '12px' }}>
                           <strong style={{ color: '#38bdf8', fontFamily: 'monospace', fontSize: '1.1rem' }}>
@@ -661,29 +666,30 @@ function App() {
                           {f.fecha_uso || new Date().toLocaleDateString()}
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="4" style={{ padding: '20px', textAlign: 'center', color: '#94a3b8' }}>
-                        Aún no hay ganadores registrados en este sorteo.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan="4" style={{ padding: '20px', textAlign: 'center', color: '#94a3b8' }}>
+                      Aún no hay ganadores registrados en este sorteo.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
 
-              <div style={{ marginTop: '25px', textAlign: 'center', borderTop: '1px solid #334155', paddingTop: '15px' }}>
-                <p style={{ color: '#fbbf24', margin: 0, fontWeight: 'bold', fontSize: '0.9rem' }}>
-                  ¡Felicidades a todos los ganadores! 🎉
-                </p>
-              </div>
+            <div style={{ marginTop: '25px', textAlign: 'center', borderTop: '1px solid #334155', paddingTop: '15px' }}>
+              <p style={{ color: '#fbbf24', margin: 0, fontWeight: 'bold', fontSize: '0.9rem' }}>
+                ¡Felicidades a todos los ganadores! 🎉
+              </p>
             </div>
           </div>
-
         </div>
-      )}
-    </div>
-  );
+
+      </div>
+    )}
+  </div>
+);
 }
 
-export default App;
+export default App;          
