@@ -644,9 +644,8 @@ function App() {
                     foliosGanadoresOficiales.map((f, index) => (
                       <tr key={f.id} style={{ borderBottom: '1px solid #334155', background: index % 2 === 0 ? 'rgba(30, 41, 59, 0.3)' : 'transparent' }}>
                         <td style={{ padding: '12px', textAlign: 'center', color: '#ffd700', fontWeight: 'bold' }}>
-                          {(f.numero_ganador || f.numero || f.numero_boleto || f.num || (index + 1))
-                            .toString()
-                            .padStart(2, '0')}
+                          {/* Muestra estrictamente el número del premio/casilla de la ruleta registrado en el backend */}
+                          {String(f.numero_ganador ?? f.numero ?? f.casilla ?? f.premio_numero ?? '01').padStart(2, '0')}
                         </td>
                         <td style={{ padding: '12px' }}>
                           <strong style={{ color: '#38bdf8', fontFamily: 'monospace', fontSize: '1.1rem' }}>
