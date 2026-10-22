@@ -201,6 +201,12 @@ function App() {
 
   const manejarGiro = async () => {
     if (!codigo.trim() || girando || bloquearGiro) return;
+    // 🔊 1. Reproducir sonido de giro al iniciar
+    try {
+      const audioGiro = new Audio("https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3");
+      audioGiro.volume = 0.5;
+      audioGiro.play().catch(e => console.log("Audio de giro bloqueado por navegador", e));
+    } catch (err) {}
 
     setGirando(true);
     setMensaje(null);
@@ -290,6 +296,12 @@ function App() {
               setTextoBoton('¡PREMIO OBTENIDO!');
 
               confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+              // 🔊 2. Reproducir sonido de victoria junto con el confeti
+              try {
+                const audioGanador = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
+                audioGanador.volume = 0.7;
+                audioGanador.play().catch(e => console.log("Audio de ganador bloqueado por navegador", e));
+              } catch (err) {}
 
               setInfoPremio({
                 codigo: codigo.trim().toUpperCase(),
