@@ -261,7 +261,7 @@ function App() {
       const anguloTotalFinal = anguloInicioFrenado + vueltasExtra + deltaAngulo;
 
       let inicioFrenadoTime = null;
-      const duracionFrenado = 5000;
+      const duracionFrenado = 8000;
 
       const frenarRuleta = (tiempo) => {
         if (!inicioFrenadoTime) inicioFrenadoTime = tiempo;
