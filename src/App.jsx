@@ -235,6 +235,7 @@ function App() {
 
       if (!res.ok) {
         animacionActiva = false;
+        audioGiro.pause(); // Limpieza si hay error
         setMensaje({ tipo: 'error', texto: data.error });
         setGirando(false);
         setBloquearGiro(true);
@@ -263,6 +264,8 @@ function App() {
       let inicioFrenadoTime = null;
       const duracionFrenado = 8000;
 
+      let audioYaPausado = false; // 👈 Bandera local y privada de este giro
+
       const frenarRuleta = (tiempo) => {
         if (!inicioFrenadoTime) inicioFrenadoTime = tiempo;
         let progreso = (tiempo - inicioFrenadoTime) / duracionFrenado;
@@ -270,7 +273,7 @@ function App() {
 
         // 🛑 TRUCO DE PREVENCIÓN: Si el frenado llega al 90%, cortamos el sonido
         // un instante antes para compensar el retraso del navegador.
-        if (progreso >= 0.70 && !window.audioDetenido) {
+        if (progreso >= 0.75 && !window.audioDetenido) {
           window.audioDetenido = true;
           audioGiro.pause();
           audioGiro.currentTime = 0;
