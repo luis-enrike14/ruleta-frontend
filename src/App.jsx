@@ -201,12 +201,14 @@ function App() {
 
   const manejarGiro = async () => {
     if (!codigo.trim() || girando || bloquearGiro) return;
-    // 🔊 1. Reproducir sonido de giro al iniciar
-    try {
-      const audioGiro = new Audio("https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3");
-      audioGiro.volume = 0.5;
-      audioGiro.play().catch(e => console.log("Audio de giro bloqueado por navegador", e));
-    } catch (err) {}
+
+    // 🔊 1. Crear el sonido de ruleta en bucle (Loop) tipo casino
+    const audioGiro = new Audio("https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3");
+    audioGiro.volume = 0.6;
+    audioGiro.loop = true; // Se repite continuamente mientras gira
+    audioGiro.play().catch(e => console.log("Audio de giro bloqueado por navegador", e));
+
+
 
     setGirando(true);
     setMensaje(null);
@@ -275,6 +277,10 @@ function App() {
         if (progreso < 1) {
           requestAnimationFrame(frenarRuleta);
         } else {
+          // 🛑 LA RULETA SE DETUVO POR COMPLETO: Detenemos el sonido de giro
+          audioGiro.pause();
+          audioGiro.currentTime = 0;
+
           anguloActualRef.current = anguloTotalFinal;
           dibujarRuleta();
           setGirando(false);
@@ -320,6 +326,7 @@ function App() {
 
     } catch (error) {
       animacionActiva = false;
+      audioGiro.pause(); // Detener sonido si ocurre error de red
       setMensaje({ tipo: 'error', texto: "Error al conectar con el servidor." });
       setGirando(false);
       setTextoBoton('¡GIRAR RULETA!');
