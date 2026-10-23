@@ -203,8 +203,7 @@ function App() {
     if (!codigo.trim() || girando || bloquearGiro) return;
 
     // 🔊 1. Crear el sonido de ruleta en bucle (Loop) tipo casino
-    const audioGiro = new Audio("https://assets.mixkit.co/active_storage/sfx/1485/1485-preview.mp3");
-    audioGiro.volume = 0.6;
+    const audioGiro = new Audio("https://assets.mixkit.co/active_storage/sfx/1613/1613-preview.mp3");
     audioGiro.loop = true; // Se repite continuamente mientras gira
     audioGiro.play().catch(e => console.log("Audio de giro bloqueado por navegador", e));
 
