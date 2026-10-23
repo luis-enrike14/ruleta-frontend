@@ -273,10 +273,11 @@ function App() {
 
         // 🛑 TRUCO DE PREVENCIÓN: Si el frenado llega al 90%, cortamos el sonido
         // un instante antes para compensar el retraso del navegador.
-        if (progreso >= 0.75 && !window.audioDetenido) {
+        if (progreso >= 0.80 && !window.audioDetenido) {
           window.audioDetenido = true;
           audioGiro.pause();
           audioGiro.currentTime = 0;
+          audioGiro.src = ""; // 👈 Limpiamos la ruta del audio para vaciar la caché
         }
 
         let easeProgreso = 1 - Math.pow(1 - progreso, 3);
@@ -290,6 +291,7 @@ function App() {
           // 🛑 LA RULETA SE DETUVO POR COMPLETO: Detenemos el sonido de giro
           audioGiro.pause();
           audioGiro.currentTime = 0;
+          audioGiro.src = "";
 
           anguloActualRef.current = anguloTotalFinal;
           dibujarRuleta();
