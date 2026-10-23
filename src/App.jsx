@@ -268,6 +268,14 @@ function App() {
         let progreso = (tiempo - inicioFrenadoTime) / duracionFrenado;
         if (progreso > 1) progreso = 1;
 
+        // 🛑 TRUCO DE PREVENCIÓN: Si el frenado llega al 90%, cortamos el sonido
+        // un instante antes para compensar el retraso del navegador.
+        if (progreso >= 0.90 && !window.audioDetenido) {
+          window.audioDetenido = true;
+          audioGiro.pause();
+          audioGiro.currentTime = 0;
+        }
+
         let easeProgreso = 1 - Math.pow(1 - progreso, 3);
         anguloActualRef.current = anguloInicioFrenado + (anguloTotalFinal - anguloInicioFrenado) * easeProgreso;
 
