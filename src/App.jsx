@@ -553,7 +553,7 @@ function App() {
 
           <div className="seccion-crear" style={{ marginBottom: '20px', padding: '15px', background: '#1e293b', borderRadius: '8px' }}>
             <h3>🎁 Paso 2: Asignar Premios Aleatorios</h3>
-            <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>Reparte los 33 premios (1 de $300, 1 de $150, 1 de $100, 4 de $50, 25 de $20) de forma aleatoria.</p>
+            <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>Reparte los 37 premios (1 de $300, 1 de $250, 1 de $150, 4 de $50, 30 de $20) de forma aleatoria.</p>
             <button onClick={asignarPremios} style={{ padding: '10px 20px', background: '#16a34a', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '6px', fontWeight: 'bold' }}>Asignar Premios</button>
           </div>
 
