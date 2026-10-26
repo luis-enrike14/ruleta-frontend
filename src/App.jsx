@@ -600,121 +600,127 @@ function App() {
 
           {mensajeAdmin && <div className="caja-mensaje-admin" style={{ padding: '10px', background: 'rgba(16, 185, 129, 0.2)', color: '#34d399', border: '1px solid #10b981', marginBottom: '15px', borderRadius: '6px' }}>{mensajeAdmin}</div>}
 
-          {/* --- NUEVA TABLA INTERACTIVA DE 100 NÚMEROS (DOS COLUMNAS) --- */}
-      <div style={{ marginTop: '30px', marginBottom: '30px', background: '#1e293b', padding: '20px', borderRadius: '12px', border: '1px solid #334155' }}>
-        
-        <h3 style={{ color: '#fbbf24', textAlign: 'center', marginTop: 0, fontSize: '20px' }}>
-          CONTROL DE GANADORES - TABLA DE 100 NÚMEROS
-        </h3>
-        <p style={{ color: '#94a3b8', textAlign: 'center', fontSize: '13px', marginBottom: '20px' }}>
-          Asigna los participantes y premios conforme vayan apartando sus números.
-        </p>
+          {/* --- TABLA UNIFICADA DE 100 NÚMEROS (DOS COLUMNAS EN UNA SOLA VISTA) --- */}
+          <div style={{ marginTop: '30px', marginBottom: '30px', background: '#1e293b', padding: '20px', borderRadius: '12px', border: '2px solid #d4af37' }}>
+    
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <h3 style={{ color: '#ffd700', margin: '0 0 5px 0', fontSize: '22px' }}>
+                CONTROL DE GANADORES - TABLA DE 100 NÚMEROS
+              </h3>
+              <p style={{ color: '#94a3b8', margin: 0, fontSize: '13px' }}>
+                Vista general de dos columnas (01-50 y 51-00) para control y asignación directa.
+              </p>
+            </div>
 
-        {/* Buscador rápido */}
-        <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-          <input 
-            type="text" 
-            placeholder="🔍 Buscar participante o número..." 
-            value={searchTermRifa}
-            onChange={(e) => setSearchTermRifa(e.target.value)}
-            style={{ 
-              width: '100%', 
-              maxWidth: '400px', 
-              padding: '8px 12px', 
-              borderRadius: '6px', 
-              border: '1px solid #475569', 
-              backgroundColor: '#0f172a', 
-              color: '#fff',
-              fontSize: '14px'
-            }}
-          />
+            {/* Buscador rápido */}
+            <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+              <input 
+                type="text" 
+                placeholder="🔍 Buscar participante o número..." 
+                value={searchTermRifa}
+                onChange={(e) => setSearchTermRifa(e.target.value)}
+                style={{ 
+                  width: '100%', 
+                  maxWidth: '400px', 
+                  padding: '8px 12px', 
+                  borderRadius: '6px', 
+                  border: '1px solid #475569', 
+                  backgroundColor: '#0f172a', 
+                  color: '#fff',
+                  fontSize: '14px'
+                }}
+              />
+            </div>
+
+            {/* Contenedor Principal en Paralelo (Grid de 2 Columnas exactas) */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', overflowX: 'auto' }}>
+      
+              {/* BLOQUE IZQUIERDO: Del 01 al 50 */}
+              <div style={{ background: '#0f172a', borderRadius: '8px', padding: '10px', border: '1px solid #334155' }}>
+                <div style={{ background: '#1e293b', padding: '8px', borderRadius: '6px', marginBottom: '10px', textAlign: 'center' }}>
+                  <span style={{ color: '#38bdf8', fontWeight: 'bold', fontSize: '13px' }}>COLUMNA IZQUIERDA (01 - 50)</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', maxHeight: '550px', overflowY: 'auto', paddingRight: '4px' }}>
+                  {Array.from({ length: 50 }, (_, i) => {
+                    const num = i + 1 < 10 ? `0${i + 1}` : `${i + 1}`;
+                    const match = searchTermRifa === '' || num.includes(searchTermRifa) || numerosRifa[num].participante.toLowerCase().includes(searchTermRifa.toLowerCase());
+                    if (!match) return null;
+
+                    return (
+                      <div key={num} style={{ display: 'flex', alignItems: 'center', background: '#1e293b', padding: '4px 8px', borderRadius: '4px', border: '1px solid #334155', gap: '6px' }}>
+                        <span style={{ fontWeight: 'bold', color: '#fbbf24', width: '24px', textAlign: 'center', fontSize: '12px' }}>{num}</span>
+                        <input 
+                          type="text" 
+                          placeholder="Participante"
+                          value={numerosRifa[num].participante}
+                          onChange={(e) => handleParticipanteChange(num, e.target.value)}
+                          style={{ flex: 2, background: '#0f172a', border: '1px solid #475569', color: '#fff', padding: '3px 6px', borderRadius: '4px', fontSize: '11px' }}
+                        />
+                        <select 
+                          value={numerosRifa[num].premio}
+                          onChange={(e) => handlePremioChange(num, e.target.value)}
+                          style={{ flex: 1.5, background: '#0f172a', border: '1px solid #475569', color: '#38bdf8', padding: '3px 6px', borderRadius: '4px', fontSize: '11px' }}
+                        >
+                          <option value="--">-- Sin premio --</option>
+                          <option value="$300 MXN">$300 MXN</option>
+                          <option value="$250 MXN">$250 MXN</option>
+                          <option value="$150 MXN">$150 MXN</option>
+                          <option value="$50 MXN">$50 MXN</option>
+                          <option value="Bono de $20">Bono de $20</option>
+                          <option value="1 Giro">1 Giro</option>
+                          <option value="2 Giros">2 Giros</option>
+                        </select>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+      
+              {/* BLOQUE DERECHO: Del 51 al 00 */}
+              <div style={{ background: '#0f172a', borderRadius: '8px', padding: '10px', border: '1px solid #334155' }}>
+                <div style={{ background: '#1e293b', padding: '8px', borderRadius: '6px', marginBottom: '10px', textAlign: 'center' }}>
+                  <span style={{ color: '#38bdf8', fontWeight: 'bold', fontSize: '13px' }}>COLUMNA DERECHA (51 - 00)</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', maxHeight: '550px', overflowY: 'auto', paddingRight: '4px' }}>
+                  {Array.from({ length: 50 }, (_, i) => {
+                    const actualNum = i + 51;
+                    const num = actualNum === 100 ? '00' : (actualNum < 10 ? `0${actualNum}` : `${actualNum}`);
+                    const match = searchTermRifa === '' || num.includes(searchTermRifa) || numerosRifa[num].participante.toLowerCase().includes(searchTermRifa.toLowerCase());
+                    if (!match) return null;
+
+                    return (
+                      <div key={num} style={{ display: 'flex', alignItems: 'center', background: '#1e293b', padding: '4px 8px', borderRadius: '4px', border: '1px solid #334155', gap: '6px' }}>
+                        <span style={{ fontWeight: 'bold', color: '#fbbf24', width: '24px', textAlign: 'center', fontSize: '12px' }}>{num}</span>
+                        <input 
+                          type="text" 
+                          placeholder="Participante"
+                          value={numerosRifa[num].participante}
+                          onChange={(e) => handleParticipanteChange(num, e.target.value)}
+                          style={{ flex: 2, background: '#0f172a', border: '1px solid #475569', color: '#fff', padding: '3px 6px', borderRadius: '4px', fontSize: '11px' }}
+                        />
+                        <select 
+                          value={numerosRifa[num].premio}
+                          onChange={(e) => handlePremioChange(num, e.target.value)}
+                          style={{ flex: 1.5, background: '#0f172a', border: '1px solid #475569', color: '#38bdf8', padding: '3px 6px', borderRadius: '4px', fontSize: '11px' }}
+                        >
+                          <option value="--">-- Sin premio --</option>
+                          <option value="$300 MXN">$300 MXN</option>
+                          <option value="$250 MXN">$250 MXN</option>
+                          <option value="$150 MXN">$150 MXN</option>
+                          <option value="$50 MXN">$50 MXN</option>
+                          <option value="Bono de $20">Bono de $20</option>
+                          <option value="1 Giro">1 Giro</option>
+                          <option value="2 Giros">2 Giros</option>
+                        </select>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
-
-        {/* Contenedor de Dos Columnas */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))', gap: '20px' }}>
-          
-          {/* COLUMNA IZQUIERDA (01 - 50) */}
-          <div style={{ background: '#0f172a', borderRadius: '8px', padding: '12px', border: '1px solid #334155' }}>
-            <h4 style={{ color: '#38bdf8', textAlign: 'center', marginTop: 0, marginBottom: '12px', fontSize: '14px' }}>
-              COLUMNA IZQUIERDA (01 - 50)
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '500px', overflowY: 'auto', paddingRight: '4px' }}>
-              {Array.from({ length: 50 }, (_, i) => {
-                const num = i + 1 < 10 ? `0${i + 1}` : `${i + 1}`;
-                const match = searchTermRifa === '' || num.includes(searchTermRifa) || numerosRifa[num].participante.toLowerCase().includes(searchTermRifa.toLowerCase());
-                if (!match) return null;
-
-                return (
-                  <div key={num} style={{ display: 'flex', alignItems: 'center', background: '#1e293b', padding: '5px 8px', borderRadius: '6px', border: '1px solid #334155', gap: '8px' }}>
-                    <span style={{ fontWeight: 'bold', color: '#fbbf24', width: '25px', textAlign: 'center', fontSize: '13px' }}>{num}</span>
-                    <input 
-                      type="text" 
-                      placeholder="Participante"
-                      value={numerosRifa[num].participante}
-                      onChange={(e) => handleParticipanteChange(num, e.target.value)}
-                      style={{ flex: 2, background: '#0f172a', border: '1px solid #475569', color: '#fff', padding: '4px 6px', borderRadius: '4px', fontSize: '12px' }}
-                    />
-                    <select 
-                      value={numerosRifa[num].premio}
-                      onChange={(e) => handlePremioChange(num, e.target.value)}
-                      style={{ flex: 1.5, background: '#0f172a', border: '1px solid #475569', color: '#38bdf8', padding: '4px 6px', borderRadius: '4px', fontSize: '12px' }}
-                    >
-                      <option value="--">-- Sin premio --</option>
-                      <option value="$300 MXN">$300 MXN</option>
-                      <option value="$250 MXN">$250 MXN</option>
-                      <option value="$150 MXN">$150 MXN</option>
-                      <option value="$50 MXN">$50 MXN</option>
-                      <option value="Bono de $20">Bono de $20</option>
-                      <option value="1 Giro">1 Giro</option>
-                      <option value="2 Giros">2 Giros</option>
-                    </select>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* COLUMNA DERECHA (51 - 00) */}
-          <div style={{ background: '#0f172a', borderRadius: '8px', padding: '12px', border: '1px solid #334155' }}>
-            <h4 style={{ color: '#38bdf8', textAlign: 'center', marginTop: 0, marginBottom: '12px', fontSize: '14px' }}>
-              COLUMNA DERECHA (51 - 00)
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '500px', overflowY: 'auto', paddingRight: '4px' }}>
-              {Array.from({ length: 50 }, (_, i) => {
-                const actualNum = i + 51;
-                const num = actualNum === 100 ? '00' : (actualNum < 10 ? `0${actualNum}` : `${actualNum}`);
-                const match = searchTermRifa === '' || num.includes(searchTermRifa) || numerosRifa[num].participante.toLowerCase().includes(searchTermRifa.toLowerCase());
-                if (!match) return null;
-
-                return (
-                  <div key={num} style={{ display: 'flex', alignItems: 'center', background: '#1e293b', padding: '5px 8px', borderRadius: '6px', border: '1px solid #334155', gap: '8px' }}>
-                    <span style={{ fontWeight: 'bold', color: '#fbbf24', width: '25px', textAlign: 'center', fontSize: '13px' }}>{num}</span>
-                    <input 
-                      type="text" 
-                      placeholder="Participante"
-                      value={numerosRifa[num].participante}
-                      onChange={(e) => handleParticipanteChange(num, e.target.value)}
-                      style={{ flex: 2, background: '#0f172a', border: '1px solid #475569', color: '#fff', padding: '4px 6px', borderRadius: '4px', fontSize: '12px' }}
-                    />
-                    <select 
-                      value={numerosRifa[num].premio}
-                      onChange={(e) => handlePremioChange(num, e.target.value)}
-                      style={{ flex: 1.5, background: '#0f172a', border: '1px solid #475569', color: '#38bdf8', padding: '4px 6px', borderRadius: '4px', fontSize: '12px' }}
-                    >
-                      <option value="--">-- Sin premio --</option>
-                      <option value="$300 MXN">$300 MXN</option>
-                      <option value="$250 MXN">$250 MXN</option>
-                      <option value="$150 MXN">$150 MXN</option>
-                      <option value="$50 MXN">$50 MXN</option>
-                      <option value="Bono de $20">Bono de $20</option>
-                      <option value="1 Giro">1 Giro</option>
-                      <option value="2 Giros">2 Giros</option>
-                    </select>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
 
         </div>
       </div>
